@@ -1,0 +1,195 @@
+.i-conten {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: calc(100% - 61px);
+}
+
+.warpper {
+    text-align: left;
+    margin: 10px;
+    padding: 10px 15px;
+    min-height: calc(100% - 50px);
+    background: #fff;
+    border: #ccc solid 1px;
+    box-shadow: 0 0 6px #888888;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none
+}
+
+a {
+    color: #444;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+    color: black
+}
+
+.padding-sm {
+    padding: 10px;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.m-t-sm {
+    margin-top: 10px;
+}
+
+.m-l-sm {
+    margin-left: 10px;
+}
+
+.m-r-sm {
+    margin-right: 10px;
+}
+
+.m-b-sm {
+    margin-bottom: 10px;
+}
+
+.m-t-md {
+    margin-top: 15px;
+}
+
+.m-l-md {
+    margin-left: 15px;
+}
+
+.m-r-md {
+    margin-right: 15px;
+}
+
+.m-b-md {
+    margin-bottom: 15px;
+}
+
+.text-center {
+    text-align: center
+}
+
+.text-left {
+    text-align: left
+}
+
+.text-right {
+    text-align: right
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+.displayNone{
+    display: none
+}
+.inline-block {
+    display: inline-block
+}
+
+.w10 {
+    width: 10% !important;
+}
+
+.w20 {
+    width: 20% !important;
+}
+
+.w30 {
+    width: 30% !important;
+}
+
+.w40 {
+    width: 40% !important;
+}
+
+.w50 {
+    width: 50% !important;
+}
+
+.w60 {
+    width: 60% !important;
+}
+
+.w70 {
+    width: 70% !important;
+}
+
+.w80 {
+    width: 80% !important;
+}
+
+.w90 {
+    width: 90% !important;
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+.w180px {
+    width: 180px !important
+}
+
+.vertical-top {
+    vertical-align: top
+}
+
+.vertical-middle {
+    vertical-align: middle
+}
+
+.colorRead {
+    color: #cc3333
+}
+
+/*滚动条样式*/
+::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 6px;
+    /*高宽分别对应横竖滚动条的尺寸*/
+}
+
+::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+/* 验证表单使用 */
+.form-group__message {
+    display: none;
+    font-size: 12px;
+    color: #cc3333;
+}
+
+.form-group--error input,
+.form-group--error input:focus,
+.form-group--error input:hover,
+.form-group--error textarea {
+    border-color: #cc3333;
+}
