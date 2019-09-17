@@ -7,11 +7,23 @@
         <!-- 登录 -->
         <template v-if="isLogin">
           <h2>登录</h2>
-          <div class="text-left">
+          <div class="text-left" @keyup.enter="login">
             <div>账号</div>
-            <div class="m-t-sm">
+            <div
+              :class="[
+                        'm-t-sm',
+                        {
+                            'animated shake delay-.5s':
+                                $v.login_ver.phone.$error
+                        },
+                        {
+                            'form-group--error':
+                                $v.login_ver.phone.$error
+                        }
+                    ]"
+            >
               <el-input
-                v-model="phone"
+                v-model="login_ver.phone"
                 clearable
                 placeholder="请输入手机号"
                 maxlength="11"
@@ -19,11 +31,45 @@
                 key="login_phone"
                 autocomplete="off"
               ></el-input>
+              <div
+                :class="[
+                        'colorRead',
+                        'text-right',
+                        {
+                            'form-group__message': !$v.login_ver
+                                .phone.$error
+                        }
+                    ]"
+                v-if="!$v.login_ver.phone.required"
+              >必填项！</div>
+              <div
+                :class="[
+                            'colorRead',
+                            'text-right',
+                            {
+                                'form-group__message': !$v.login_ver
+                                    .phone.$error
+                            }
+                        ]"
+                v-if="!$v.login_ver.phone.phoneRegex"
+              >手机格式错误！</div>
             </div>
             <div class="m-t-md">密码</div>
-            <div class="m-t-sm">
+            <div
+              :class="[
+                        'm-t-sm',
+                        {
+                            'animated shake delay-.5s':
+                                $v.login_ver.password.$error
+                        },
+                        {
+                            'form-group--error':
+                                $v.login_ver.password.$error
+                        }
+                    ]"
+            >
               <el-input
-                v-model="password"
+                v-model="login_ver.password"
                 type="password"
                 clearable
                 placeholder="请输入密码"
@@ -31,6 +77,28 @@
                 key="login_password"
                 autocomplete="off"
               ></el-input>
+              <div
+                :class="[
+                            'colorRead',
+                            'text-right',
+                            {
+                                'form-group__message': !$v.login_ver
+                                    .password.$error
+                            }
+                        ]"
+                v-if="!$v.login_ver.password.required"
+              >必填项！</div>
+              <div
+                :class="[
+                            'colorRead',
+                            'text-right',
+                            {
+                                'form-group__message': !$v.login_ver
+                                    .password.$error
+                            }
+                        ]"
+                v-if="!$v.login_ver.password.minLength"
+              >输入长度不能小于6！</div>
             </div>
             <div style="font-size:12px;margin-top:5px">
               <el-checkbox size="mini" v-model="checked">
@@ -41,10 +109,10 @@
               </span>
             </div>
             <div class="m-t-md">
-              <el-button class="login_btn" type="button" round>登录</el-button>
+              <el-button class="login_btn" type="button" round @click="login()">登录</el-button>
             </div>
             <div style="font-size:12px;margin-top:5px" class="text-center">
-              <a href="#" @click="isLogin = false">立即注册</a>
+              <a href="#" @click="goToRegiter()">立即注册</a>
             </div>
           </div>
         </template>
@@ -52,7 +120,7 @@
         <!-- 注册 -->
         <template v-else>
           <h2>注册</h2>
-          <div class="text-left">
+          <div class="text-left" @keyup.enter="commitRegister">
             <div>账号</div>
             <div
               :class="[
@@ -117,8 +185,8 @@
                 v-model="register_ver.companyName"
                 clearable
                 placeholder="请输入公司名称"
-                maxlength="11"
-                prefix-icon="el-icon-message"
+                maxlength="16"
+                prefix-icon="el-icon-office-building"
                 key="login_companyName"
                 autocomplete="off"
               ></el-input>
@@ -303,7 +371,7 @@
               <el-button class="register_btn" @click="commitRegister()" type="button" round>注册</el-button>
             </div>
             <div style="font-size:12px;margin-top:5px" class="text-center">
-              <a href="#" @click="isLogin = true">立即登录</a>
+              <a href="#" @click="goToLogin()">立即登录</a>
             </div>
           </div>
         </template>
@@ -326,7 +394,7 @@ const phoneRegex = regex("phoneNumber", /^1(3|4|5|7|8)\d{9}$/); // 手机号码�
 export default {
   data() {
     return {
-      isLogin: false,
+      isLogin: true,
       checked: false,
       login_ver: {
         phone: "",
@@ -378,16 +446,105 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    let remeber = JSON.parse(localStorage.getItem("remeberPassword"));
+    if (remeber) {
+      this.checked = true;
+      this.login_ver.phone = remeber.phone;
+      this.login_ver.password = remeber.password;
+    }
+  },
   methods: {
+    /**
+     * 跳转到注册
+     */
+    goToRegiter() {
+      this.isLogin = false;
+      this.$v.login_ver.$reset();
+      for (let i in this.login_ver) {
+        this.login_ver[i] = "";
+      }
+    },
+    /**
+     * 跳转到登录
+     */
+    goToLogin() {
+      this.isLogin = true;
+      this.$v.register_ver.$reset();
+      //   清空内容
+      for (let i in this.register_ver) {
+        this.register_ver[i] = "";
+      }
+    },
     /**
      * 账号注册
      * 数据校验
      */
     commitRegister() {
-      this.$v.$touch(); // 验证
+      let _this = this;
+      this.$v.register_ver.$touch(); // 验证
       // 验证不出错（通过）
-      if (!this.$v.$invalid) {
+      if (!this.$v.register_ver.$invalid) {
+        this.axios
+          .post("/api/register", this.register_ver)
+          .then(res => {
+            _this.error.listen(res.data.msg).then(() => {
+              _this.isLogin = true;
+              this.$v.register_ver.$reset();
+              //   清空内容
+              for (let i in this.register_ver) {
+                this.register_ver[i] = "";
+              }
+              _this.$message({
+                message: "注册成功",
+                type: "success"
+              });
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    /**
+     * 登录
+     */
+    login() {
+      let _this = this;
+      this.$v.login_ver.$touch(); // 验证
+      // 验证不出错（通过）
+      if (!this.$v.login_ver.$invalid) {
+        this.axios
+          .post("/api/login", this.login_ver)
+          .then(res => {
+            _this.error.listen(res.data.msg).then(() => {
+              // 将用户信息加入缓存，浏览器关闭清除
+              sessionStorage.setItem(
+                "userInfo",
+                JSON.stringify(res.data.result)
+              );
+              // 记住账号、密码
+              if (_this.checked) {
+                localStorage.setItem(
+                  "remeberPassword",
+                  JSON.stringify({
+                    phone: _this.login_ver.phone,
+                    password: _this.login_ver.password
+                  })
+                );
+              } else {
+                localStorage.removeItem("remeberPassword");
+              }
+              _this.$router.push("/Home");
+              _this.$message({
+                type: "success",
+                message: "登录成功"
+              });
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     }
   }
@@ -417,7 +574,7 @@ export default {
   padding: 20px 20px;
   min-width: 25%;
   min-height: 450px;
-  max-height: 600px;
+  max-height: 800px;
   background-color: #fff;
   border: 1px solid #fff;
   border-radius: 4px;
@@ -451,8 +608,10 @@ a:hover {
   width: 12px !important;
   height: 12px !important;
 }
-.el-button:hover,
-.el-button {
+.register_btn:hover,
+.register_btn,
+.login_btn:hover,
+.login_btn {
   color: #fff !important;
 }
 </style>

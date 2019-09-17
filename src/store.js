@@ -7,15 +7,7 @@ export default new Vuex.Store({
   state: {
     isCollapse: false,
     changeWidth: true,
-    userInfo: {
-      userName: 'MR.L',
-      email: '981964763@qq.com',
-      phone: 15600000001,
-      roleId: 1,
-      roleName: '超级管理员',
-      token: '',
-      refreshToken: ''
-    },
+    userInfo: {},
     echartsColor: [
       '#22c3aa',
       '#96dee8',

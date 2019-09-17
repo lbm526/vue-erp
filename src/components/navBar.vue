@@ -7,15 +7,13 @@
         </el-button>
       </div>
       <div id="nav-right">
-        <div>
-          <router-link to="/">
-              <i class="iconfont icon-chehuisekuai"></i>
-              <span>注销</span>
-          </router-link>
+        <div @click="singDown()" class="singDown">
+          <i class="iconfont icon-chehuisekuai"></i>
+          <span>注销</span>
         </div>
         <div>
           <i class="el-icon-user-solid"></i>
-          <label id="user">用户</label>
+          <label id="user">{{userName}}</label>
         </div>
       </div>
     </nav>
@@ -28,10 +26,19 @@ import { mapState } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      userName: "用户"
+    };
+  },
+  created() {
+    this.userName = this.$store.state.userInfo.userName;
   },
   methods: {
-    ...mapActions(["flexibleMenu"])
+    ...mapActions(["flexibleMenu"]),
+    singDown() {
+      sessionStorage.removeItem('userInfo');
+      this.$router.replace('/')
+    }
   }
 };
 </script>
@@ -57,5 +64,8 @@ nav {
 }
 .el-icon-menu {
   color: rgb(44, 135, 238);
+}
+.singDown:hover{
+  cursor: pointer;
 }
 </style>
