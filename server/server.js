@@ -11,20 +11,20 @@ app.use(express.static(path.join(__dirname, 'dist'))) // 初始启动的html文�
 
 app.use(bodyParser.json()) // 解析 x-www-form-urlencoded,extended为false时数据为String或Array,true则是所有数据
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }))
 
 // 请求超时处理
-app.use(timeout('2s'))
+app.use(timeout('3s'))
 app.use(haltOnTimedout)
 
 function haltOnTimedout(req, res, next) {
-  if (!req.timedout) {
-    //   res.status(503).send()
-    next()
-  } else {
-    res.json('chaoshi')
-  }
+    if (!req.timedout) {
+        //   res.status(503).send()
+        next()
+    } else {
+        res.json('请求超时,请通知服务器人员检查服务器！')
+    }
 }
 app.use(router) // 运行api
 
@@ -32,7 +32,7 @@ const port = process.env.PORT || 8088;
 var host = process.env.host || '127.0.0.1'
 
 app.listen(port, () => {
-  console.log(`
+    console.log(`
     Serve is running~
     network:http://${host}:${port}`)
 })
