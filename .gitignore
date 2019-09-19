@@ -3246,3 +3246,5 @@ yarn-error.log*
 .history/.gitignore_20190917210247
 .history/.gitignore_20190917210258
 .history/.gitignore_20190917210321
+*.js
+.history/.gitignore_20190917210324

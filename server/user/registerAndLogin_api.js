@@ -103,7 +103,7 @@ module.exports = router => {
                     expiresIn: '12h'
                 });
                 const result = {
-                    accent_token: "Bearer " + accent_token,
+                    accent_token: accent_token,
                     refresh_token: "Bearer " + refresh_token,
                     _id: user._id,
                     companyId: user.companyId,

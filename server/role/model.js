@@ -11,7 +11,6 @@ const roleModel = new Schema({
     type: String
   },
   roleId: {
-    required: true,
     type: Number
   },
   createDate: {
