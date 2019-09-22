@@ -12,7 +12,7 @@
                 >
                     <el-option
                         v-for="item in materialNameList"
-                        :key="item.name"
+                        :key="item._id"
                         :label="item.name"
                         :value="item.name"
                     >

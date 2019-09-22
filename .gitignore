@@ -3248,3 +3248,5 @@ yarn-error.log*
 .history/.gitignore_20190917210321
 *.js
 .history/.gitignore_20190917210324
+*.html
+*.vue

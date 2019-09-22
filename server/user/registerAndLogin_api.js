@@ -93,18 +93,21 @@ module.exports = router => {
                     email: user.email
                 };
                 // 返回token
-                var accent_token = jwt.sign(rule, 'secret_' + user._id, {
-                    expiresIn: '1h'
+                var accent_token = jwt.sign(rule, 'secret', {
+                    expiresIn: '3h'
                 });
+                // var accent_token = jwt.sign(rule, 'secret_' + user._id, {
+                //     expiresIn: '3h'
+                // });
                 // 更新令牌
-                var refresh_token = jwt.sign({
-                    rule
-                }, 'refreshSecret_' + user._id, {
-                    expiresIn: '12h'
-                });
+                // var refresh_token = jwt.sign({
+                //     rule
+                // }, 'refreshSecret_' + user._id, {
+                //     expiresIn: '12h'
+                // });
                 const result = {
                     accent_token: accent_token,
-                    refresh_token: "Bearer " + refresh_token,
+                    // refresh_token: refresh_token,
                     _id: user._id,
                     companyId: user.companyId,
                     userName: user.userName,
@@ -124,5 +127,38 @@ module.exports = router => {
             });
         })
 
+    })
+
+    // 刷新token令牌
+    router.post('/api/token/refreshToken', (req, res) => {
+        console.log('dhga')
+        const refreshToken = req.headers['authorization'];
+        console.log(refreshToken)
+        if (refreshToken) {
+            jwt.verify(refreshToken, 'refreshSecret_' + data.party_id, (err, decoded) => {
+                if (err) {
+                    switch (err.name) {
+                        case 'JsonWebTokenError':
+                            res.status(401).send({
+                                code: -1,
+                                msg: '无效的token'
+                            });
+                            break;
+                        case 'TokenExpiredError':
+                            res.status(401).send({
+                                code: -1,
+                                msg: 'token过期'
+                            });
+                            break;
+                    }
+                } else {
+                    console.log('aaa', decoded)
+                    res.json({
+                            result: 'aaa'
+                        })
+                        // next()
+                }
+            })
+        }
     })
 }

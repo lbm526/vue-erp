@@ -535,6 +535,7 @@ export default {
               } else {
                 localStorage.removeItem("remeberPassword");
               }
+              sessionStorage.removeItem("histroyRouter");
               _this.$router.push("/Home");
               _this.$message({
                 type: "success",

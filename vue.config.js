@@ -1,18 +1,16 @@
-const webpack = require('webpack')
 const port = process.env.PORT || 8088;
-
 module.exports = {
   productionSourceMap: false, // 不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
-  configureWebpack: {
-    plugins: [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-        Popper: ['popper.js', 'default']
-      })
-    ]
-  },
+  // configureWebpack: {
+  //   plugins: [
+  //     new webpack.ProvidePlugin({
+  //       $: 'jquery',
+  //       jQuery: 'jquery',
+  //       'window.jQuery': 'jquery',
+  //       Popper: ['popper.js', 'default']
+  //     }),
+  //   ]
+  // },
   // devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
@@ -28,5 +26,5 @@ module.exports = {
         }
       }
     }
-  }
+  },
 }
