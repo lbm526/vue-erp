@@ -19,6 +19,9 @@ const material = new Schema({
     required: true,
     type: String
   },
+  companyId: {
+    type: String
+  },
   mark: {
     type: String
   },

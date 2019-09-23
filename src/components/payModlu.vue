@@ -161,13 +161,15 @@ export default {
             let day = this.buyDate;
             let month = this.buyMonth;
             let year = this.buyYear;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/incomeAndPay/payList", {
                     params: {
                         name,
                         day,
                         month,
-                        year
+                        year,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -185,8 +187,13 @@ export default {
          */
         PayNameList() {
             const _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
-                .get("/api/incomeAndPay/PayNameList")
+                .get("/api/incomeAndPay/PayNameList",{
+                    params: {
+                        companyId: user.companyId
+                    }
+                })
                 .then(res => {
                     _this.error.listen(res.data.msg).then(() => {
                         console.log("支出名称列表", res);

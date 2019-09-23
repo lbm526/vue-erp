@@ -37,6 +37,7 @@ export default {
     ...mapActions(["flexibleMenu"]),
     singDown() {
       sessionStorage.removeItem('userInfo');
+      this.$store.state.userInfo = {};
       this.$router.replace('/')
     }
   }

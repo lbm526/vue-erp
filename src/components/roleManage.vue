@@ -189,9 +189,12 @@ export default {
 
         // 获取角色列表
         getRoleList() {
+            let user = this.$store.state.userInfo;
             const _this = this;
             this.axios
-                .get("/api/roleManage/roleList")
+                .get("/api/roleManage/roleList",{params:{
+                    companyId: user.companyId
+                }})
                 .then(res => {
                     _this.error.listen(res.data.msg).then(function() {
                         console.log("角色列表", res);
@@ -204,12 +207,14 @@ export default {
         },
         // 添加角色
         onSubmit(formName) {
+            const user = this.$store.state.userInfo;
             const _this = this;
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     this.axios
                         .post("/api/roleManage/addRole", {
-                            roleName: _this.ruleForm.roleName
+                            roleName: _this.ruleForm.roleName,
+                            companyId: user.companyId
                         })
                         .then(res => {
                             console.log(res);

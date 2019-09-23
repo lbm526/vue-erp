@@ -24,6 +24,9 @@ const payModal = new Scheam({
   year: {
     type: String
   },
+  companyId: {
+    type: String
+  },
   month: {
     type: String
   },

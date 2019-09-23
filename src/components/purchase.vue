@@ -114,7 +114,7 @@
                                 >采购完成</el-button
                             >
                             <el-button
-                                v-else
+                                v-else-if="scope.row.purchaseState === 2"
                                 @click="goToStore(scope.row)"
                                 type="primary"
                                 plain
@@ -159,6 +159,10 @@ export default {
                 {
                     id: "compelte",
                     text: "已采购"
+                },
+                {
+                    id: "goStore",
+                    text: "已入库"
                 }
             ],
             currentPage: 1,
@@ -198,12 +202,14 @@ export default {
          */
         getMaterialList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/material/getMaterialList", {
                     params: {
                         purchaseState: this.purchaseState,
                         material: this.materialName,
-                        purchaseTime:this.buyDate
+                        purchaseTime:this.buyDate,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -221,10 +227,12 @@ export default {
          */
         getMaterialNameList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/material/materialNameList", {
                     params: {
-                        purchaseState: this.purchaseState
+                        purchaseState: this.purchaseState,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {

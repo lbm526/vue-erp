@@ -20,7 +20,8 @@ module.exports = router => {
       let id = uuid() // 生成随机的id
       let opt = {
         id,
-        produceSate: 0
+        produceSate: 0,
+        companyId: JSON.parse(fields.companyId)
       }
       //   参数处理
       fields = JSON.parse(JSON.stringify(fields))
@@ -212,12 +213,20 @@ module.exports = router => {
   //   文件下载
   router.get('/api/produce/downloadFile', (req, res) => {
     const data = req.query
+    console.log('a',req)
     db.FileModel.findOne({
       id: JSON.parse(data.id)
     }, (errT, file) => {
-      if (errT) throw errT
+      if (errT) {
+        res.json({
+          msg: '下载失败',
+          success:false
+        })
+      }
+      console.log('aaa')
       if (file) {
         // 文件下载
+        console.log('bbb')
         let paths = file.path
         let name = file.name
         res.download(paths, name)
@@ -231,7 +240,8 @@ module.exports = router => {
   router.get('/api/produce/produceNameList', (req, res) => {
     const data = JSON.parse(JSON.stringify(req.query))
     db.Produce.find({
-      produceSate: data.produceSate
+      produceSate: data.produceSate,
+      companyId: data.companyId
     }).then(list => {
       if (!list) {
         res.json({

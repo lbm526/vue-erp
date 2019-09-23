@@ -196,6 +196,7 @@ module.exports = router => {
   router.get('/api/material/materialNameList', (req, res) => {
     const data = JSON.parse(JSON.stringify(req.query))
     db.Material.find({
+      companyId: data.companyId,
       $or: [{
         distributeState: data.distributeState
       }, {

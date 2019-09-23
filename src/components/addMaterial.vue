@@ -186,10 +186,12 @@ export default {
         },
         keepMaterial() {
              const _this = this;
+             const user = this.$store.state.userInfo;
             this.$v.$touch(); // 验证
             // 验证不出错（通过）
             if (!this.$v.$invalid) {
-                this.message.author = this.$store.state.userInfo.userName;
+                this.message.author = user.userName;
+                this.message.companyId = user.companyId;
                 this.axios.post('/api/material/addMaterial',this.message)
                 .then(res => {
                     _this.error.listen(res.data.msg).then(() => {

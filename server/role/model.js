@@ -13,6 +13,10 @@ const roleModel = new Schema({
   roleId: {
     type: Number
   },
+  companyId: {
+    type: String,
+    required: true
+  },
   createDate: {
     type: String,
     default: new Date().Format('yyyy-MM-dd hh:mm:ss')

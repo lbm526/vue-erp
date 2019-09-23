@@ -68,6 +68,7 @@ axios.interceptors.request.use(config => {
         // }
 
     }
+    console.log('aaaa',config)
     return config
 }, err => {
     // 对请求错误做些什么
@@ -75,6 +76,7 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(res => {
+    console.log(res)
     return res;
 }, err => {
     if (err.response) {

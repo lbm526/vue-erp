@@ -287,8 +287,11 @@ export default {
          */
         getUserList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
-                .get("/api/user/userList")
+                .get("/api/user/userList",{params:{
+                    companyId: user.companyId
+                }})
                 .then(res => {
                     console.log(res);
                     _this.tableData = res.data.result;

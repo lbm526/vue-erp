@@ -52,7 +52,8 @@ module.exports = router => {
       reason: data.reason,
       year: year,
       month: month,
-      day: day
+      day: day,
+      companyId: data.companyId
     }
     db.PayModal(opt).save(err => {
       if (err) {

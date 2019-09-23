@@ -77,16 +77,16 @@
             >
                 <el-table-column type="selection" width="45" fixed>
                 </el-table-column>
-                <el-table-column prop="_id" label="ID" width="120" v-if="false">
+                <el-table-column prop="_id" label="ID" v-if="false">
                 </el-table-column>
-                <el-table-column prop="material" label="原料名称" width="120">
+                <el-table-column prop="material" label="原料名称">
                 </el-table-column>
-                <el-table-column prop="hasNumber" label="数量" width="100">
+                <el-table-column prop="hasNumber" label="数量">
                 </el-table-column>
                 <el-table-column
                     prop="distributeState"
                     label="分发状态"
-                    width="100"
+                    
                 >
                     <template slot-scope="scope">
                         {{
@@ -101,9 +101,9 @@
                     label="用途"
                     width="300"
                 ></el-table-column>
-                <el-table-column prop="author" label="录入者" width="100">
+                <el-table-column prop="author" label="录入者">
                 </el-table-column>
-                <el-table-column prop="mark" label="备注" width="180">
+                <el-table-column prop="mark" label="备注">
                 </el-table-column>
                 <el-table-column
                     align="center"
@@ -227,12 +227,14 @@ export default {
          */
         getMaterialList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/material/getMaterialList", {
                     params: {
                         distributeState: this.distributeState,
                         material: this.materialName,
-                        author: this.author
+                        author: this.author,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -250,10 +252,12 @@ export default {
          */
         getMaterialNameList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/material/materialNameList", {
                     params: {
-                        distributeState: this.distributeState
+                        distributeState: this.distributeState,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {

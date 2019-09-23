@@ -254,8 +254,13 @@ export default {
          */
         capital() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
-                .get("/api/incomeAndPay/money")
+                .get("/api/incomeAndPay/money",{
+                    params: {
+                        companyId: user.companyId
+                    }
+                })
                 .then(res => {
                     _this.error.listen(res.data.msg).then(() => {
                         console.log("资金总汇", res);

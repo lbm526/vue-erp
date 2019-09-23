@@ -4,7 +4,8 @@ module.exports = router => {
   // 添加角色
   router.post('/api/roleManage/addRole', (req, res) => {
     db.role.findOne({
-      roleName: req.body.roleName
+      roleName: req.body.roleName,
+      companyId: req.body.companyId
     }).then(User => {
       // console.log(role)
       // return
@@ -16,7 +17,8 @@ module.exports = router => {
         return false
       } else {
         const options = {
-          roleName: req.body.roleName
+          roleName: req.body.roleName,
+          companyId: req.body.companyId
         }
         //   保存角色
         db.role(options).save((err) => {
@@ -74,7 +76,9 @@ module.exports = router => {
   })
   // 查询角色列表
   router.get('/api/roleManage/roleList', (req, res) => {
-    db.role.find({}, (err, data) => {
+    db.role.find({
+      companyId: req.query.companyId
+    }, (err, data) => {
       if (err) {
         res.status(500).send()
         return

@@ -221,12 +221,14 @@ export default {
          */
         getMaterialList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/material/getMaterialList", {
                     params: {
                         storeState: 1,
                         material: this.materialName,
-                        storeTime: this.buyDate
+                        storeTime: this.buyDate,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -244,11 +246,13 @@ export default {
          */
         getMaterialNameList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/material/materialNameList", {
                     params: {
                         storeState: 1,
-                        purchaseState: 3
+                        purchaseState: 3,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {

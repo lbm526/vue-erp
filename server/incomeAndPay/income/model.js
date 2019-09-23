@@ -45,6 +45,9 @@ const income = new Schema({
   month: {
     type: String
   },
+  companyId: {
+    type: String
+  },
   day: {
     type: String
   },

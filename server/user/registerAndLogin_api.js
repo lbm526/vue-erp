@@ -2,72 +2,83 @@ const db = require('./model')
 const uuid = require('uuid/v4')
 const bcrypt = require('bcryptjs') // 密码加密
 const jwt = require('jsonwebtoken');
-
+const roleModel = require('../role/model')
 
 // 注册、登录页面
 module.exports = router => {
     router.post('/api/register', (req, res) => {
-        console.log('aaa')
-            const data = req.body
-            db.User.findOne({
-                phone: data.phone
-            }).then(phone => {
-                if (phone) {
-                    res.json({
-                        msg: '账号已注册！',
-                        success: false
-                    });
-                    return false
-                }
-                db.User.findOne({ email: data.email })
-                    .then(email => {
-                        if (email) {
-                            res.json({
-                                msg: '邮箱已注册！',
-                                success: false
-                            });
-                            return false
-                        }
-                        db.User.findOne({ companyName: data.companyName })
-                            .then(companyName => {
-                                if (companyName) {
-                                    res.json({
-                                        msg: '公司已注册！',
-                                        success: false
-                                    });
-                                    return false
+        const data = req.body
+        db.User.findOne({
+            phone: data.phone
+        }).then(phone => {
+            if (phone) {
+                res.json({
+                    msg: '账号已注册！',
+                    success: false
+                });
+                return false
+            }
+            db.User.findOne({ email: data.email })
+                .then(email => {
+                    if (email) {
+                        res.json({
+                            msg: '邮箱已注册！',
+                            success: false
+                        });
+                        return false
+                    }
+                    db.User.findOne({ companyName: data.companyName })
+                        .then(companyName => {
+                            if (companyName) {
+                                res.json({
+                                    msg: '公司已注册！',
+                                    success: false
+                                });
+                                return false
+                            }
+                            const opt = {
+                                companyId: uuid(),
+                                userName: '老板',
+                                roleId: 1,
+                                roleName: '超级管理员',
+                                email: data.email,
+                                phone: data.phone,
+                                password: data.password,
+                                companyName: data.companyName,
+                            }
+                            // 密码加密
+                            bcrypt.hash(opt.password, 10, function (err, hash) {
+                                if (err) throw err
+                                opt.password = hash
+                                const options = {
+                                    roleName: opt.roleName,
+                                    companyId: opt.companyId
                                 }
-                                const opt = {
-                                        companyId: uuid(),
-                                        userName: '老板',
-                                        roleId: 1,
-                                        roleName: '超级管理员',
-                                        email: data.email,
-                                        phone: data.phone,
-                                        password: data.password,
-                                        companyName: data.companyName,
+                                //   保存角色
+                                roleModel.role(options).save((err) => {
+                                    if (err) {
+                                        res.status(500).send()
+                                        return
                                     }
-                                    // 密码加密
-                                bcrypt.hash(opt.password, 10, function(err, hash) {
-                                    if (err) throw err
-                                    opt.password = hash
-                                    db.User(opt).save(function(err) {
-                                        if (err) {
-                                            res.status(500).send()
-                                            return
-                                        }
-                                        const data = {
-                                            msg: '',
-                                            success: true
-                                        }
-                                        res.json(data)
-                                    })
                                 })
+                                db.User(opt).save(function (err) {
+                                    if (err) {
+                                        res.status(500).send()
+                                        return
+                                    }
+                                    const data = {
+                                        msg: '',
+                                        success: true
+                                    }
+                                    res.json(data)
+                                })
+
                             })
-                    })
-            })
+                        })
+                })
         })
-        // 登录
+    })
+    // 登录
     router.post('/api/login', (req, res) => {
         const data = req.body
         db.User.findOne({
@@ -80,7 +91,7 @@ module.exports = router => {
                 })
                 return false
             }
-            bcrypt.compare(data.password, user.password, function(err, tank) {
+            bcrypt.compare(data.password, user.password, function (err, tank) {
                 if (!tank) {
                     res.json({
                         msg: '密码错误！',
@@ -155,9 +166,9 @@ module.exports = router => {
                 } else {
                     console.log('aaa', decoded)
                     res.json({
-                            result: 'aaa'
-                        })
-                        // next()
+                        result: 'aaa'
+                    })
+                    // next()
                 }
             })
         }

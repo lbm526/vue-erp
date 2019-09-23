@@ -284,10 +284,12 @@ export default {
          */
         getProduceNameArray() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/produce/produceNameList", {
                     params: {
-                        produceSate: this.currentSort
+                        produceSate: this.currentSort,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -304,16 +306,17 @@ export default {
          * 获取生产产品列表
          */
         getProduceList() {
-            console.log(new Date(this.buyDate));
             let _this = this;
+            let user = this.$store.state.userInfo;
             let search = {
                 produceName: this.produceName,
                 produceSate: this.currentSort,
-                completeTime: this.buyDate
+                completeTime: this.buyDate,
+                companyId: user.companyId
             };
             this.axios
                 .get("/api/produce/getProduceList", {
-                    params: search
+                    params: search,
                 })
                 .then(res => {
                     _this.error.listen(res.data.msg).then(() => {
@@ -330,6 +333,7 @@ export default {
          * 传入下载的id
          */
         download(row) {
+            console.log(row.id)
             this.downloadSrc =
                 "http://127.0.0.1:8088/api/produce/downloadFile?id=" +
                 JSON.stringify(row.id);

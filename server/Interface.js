@@ -11,13 +11,17 @@ const db = require('./user/model')
 // token: 'secret_' + user._id
 // refreshToken: 'refreshSecret_' + user._id
 router.all('*', (req, res, next) => {
+    console.log('ahjf',req.url)
     let data = {}
     if (req.method == 'GET') {
         data = req.query
     } else if (req.method == 'POST') {
         data = req.body
     }
-
+    // 工艺图片下载
+    if(req.url.indexOf('/api/produce/downloadFile') > -1){
+        next()
+    }
     if (req.url == '/api/login' || req.url == '/api/register' || req.url == '/api/token/refreshToken') {
         next()
     } else {

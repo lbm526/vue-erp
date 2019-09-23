@@ -339,8 +339,13 @@ export default {
         // 获取角色信息
         getRoleList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
-                .get("/api/roleManage/roleList")
+                .get("/api/roleManage/roleList",{
+                    params: {
+                        companyId: user.companyId
+                    }
+                })
                 .then(res => {
                     console.log("角色列表", res);
                     _this.roleList = res.data.result || [];
@@ -352,11 +357,18 @@ export default {
         // 提交用户信息
         submitUser() {
             const _this = this;
+            let user = this.$store.state.userInfo;
+            let opt = {
+                companyId: user.companyId,
+                companyName: user.companyName
+            }
             this.$v.$touch(); // 验证
             // 验证不出错（通过）
             if (!this.$v.$invalid) {
+                Object.assign(opt,this.message)
+                console.log(opt)
                 this.axios
-                    .post("/api/user/addUser", this.message)
+                    .post("/api/user/addUser", opt)
                     .then(res => {
                         _this.error.listen(res.data.msg).then(function() {
                             _this.$message({
