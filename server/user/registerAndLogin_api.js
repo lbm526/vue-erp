@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 // 注册、登录页面
 module.exports = router => {
     router.post('/api/register', (req, res) => {
+        console.log('aaa')
             const data = req.body
             db.User.findOne({
                 phone: data.phone

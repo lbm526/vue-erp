@@ -231,7 +231,6 @@
                 v-model="register_ver.email"
                 clearable
                 placeholder="请输入邮箱"
-                maxlength="11"
                 prefix-icon="el-icon-message"
                 key="login_email"
                 autocomplete="off"

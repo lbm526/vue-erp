@@ -17,7 +17,8 @@ router.all('*', (req, res, next) => {
     } else if (req.method == 'POST') {
         data = req.body
     }
-    if (req.url == '/api/login' || req.url == '/api/token/refreshToken') {
+
+    if (req.url == '/api/login' || req.url == '/api/register' || req.url == '/api/token/refreshToken') {
         next()
     } else {
         const token = req.headers['authorization'];
