@@ -11,7 +11,6 @@ const db = require('./user/model')
 // token: 'secret_' + user._id
 // refreshToken: 'refreshSecret_' + user._id
 router.all('*', (req, res, next) => {
-    console.log('ahjf',req.url)
     let data = {}
     if (req.method == 'GET') {
         data = req.query

@@ -224,10 +224,12 @@ export default {
          */
         getProduceNameArray() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/produce/produceNameList", {
                     params: {
-                        produceSate: 3
+                        produceSate: 3,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -245,10 +247,12 @@ export default {
          */
         getProduceList() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             let search = {
                 produceName: this.produceName,
                 produceSate: 3,
-                storeTime: this.buyDate
+                storeTime: this.buyDate,
+                companyId: user.companyId
             };
             this.axios
                 .get("/api/produce/getProduceList", {

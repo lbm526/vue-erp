@@ -236,7 +236,7 @@ export default {
           }
         ]
       },
-      param: {}
+      param: new FormData()
     };
   },
   created() {
@@ -267,7 +267,6 @@ export default {
     },
     onchange2(file, filesList) {
       console.log(file, filesList);
-      this.param = new FormData();
       this.param.append("file", file.raw);
     },
     /**获取材料仓库列表*/

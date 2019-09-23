@@ -253,10 +253,12 @@ export default {
          */
         getProduceNameArray() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/produce/produceNameList", {
                     params: {
-                        produceSate: this.currentSort + 2
+                        produceSate: this.currentSort + 2,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -273,11 +275,13 @@ export default {
          * 获取生产产品列表
          */
         getProduceList() {
+            let user = this.$store.state.userInfo;
             let _this = this;
             let search = {
                 produceName: this.produceName,
                 produceSate: this.currentSort + 2,
-                completeTime: this.buyDate
+                completeTime: this.buyDate,
+                companyId: user.companyId
             };
             this.axios
                 .get("/api/produce/getProduceList", {

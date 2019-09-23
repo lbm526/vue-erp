@@ -150,10 +150,12 @@ export default {
         /**获取各类占比数据 */
         getProduceState(index) {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
                 .get("/api/produce/proportion", {
                     params: {
-                        produceSate: index
+                        produceSate: index,
+                        companyId: user.companyId
                     }
                 })
                 .then(res => {
@@ -174,8 +176,13 @@ export default {
         /**获取前十名产品 */
         getTopTen() {
             let _this = this;
+            let user = this.$store.state.userInfo;
             this.axios
-                .get("/api/produce/topTen")
+                .get("/api/produce/topTen",{
+                    params: {
+                        companyId: user.companyId
+                    }
+                })
                 .then(res => {
                     _this.error.listen(res.data.msg).then(() => {
                         console.log("前十名产品", res);

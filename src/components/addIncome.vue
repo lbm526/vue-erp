@@ -317,7 +317,7 @@ export default {
       // 验证不出错（通过）
       if (!this.$v.$invalid) {
         this.message.paymentTime = new Date();
-        Object.assign(opt,this.message)
+        Object.assign(opt, this.message);
         this.axios
           .post("/api/incomeAndPay/addIncome", opt)
           .then(res => {

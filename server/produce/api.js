@@ -277,7 +277,8 @@ module.exports = router => {
     const data = req.query
     const array = []
     db.Produce.find({
-      produceSate: data.produceSate
+      produceSate: data.produceSate,
+      companyId: data.companyId
     }).then(list => {
       if (list) {
         for (let i = 0; i < list.length; i++) {
@@ -298,7 +299,10 @@ module.exports = router => {
    * 完成产品前10名
    */
   router.get('/api/produce/topTen', (req, res) => {
-    db.Produce.find({}).sort({
+    const data = req.query
+    db.Produce.find({
+      companyId: data.companyId
+    }).sort({
       'produceNumber': -1
     }).limit(10).then(list => {
       let opt = {
