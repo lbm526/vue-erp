@@ -24,6 +24,7 @@
             >
               <el-input
                 v-model="login_ver.phone"
+                autofocus="true"
                 clearable
                 placeholder="请输入手机号"
                 maxlength="11"

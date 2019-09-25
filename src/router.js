@@ -9,11 +9,7 @@ Vue.use(Router)
 const router = new Router({
         mode: 'history',
         base: process.env.BASE_URL,
-        routes: [{
-            // 路由不存在时，跳转到主页面
-            path: '*',
-            redirect: '/'
-        }, {
+        routes: [ {
             path: '/',
             component: login
         }, {
@@ -166,7 +162,11 @@ const router = new Router({
                         import ('./components/materialStore.vue')
                 }
             ]
-        }]
+        },{
+            // 路由不存在时，跳转到主页面
+            path: '*',
+            redirect: '/'
+        },]
     })
     // 全局导航守卫
     // 阻止不正常跳转

@@ -13,14 +13,14 @@ module.exports = {
   // },
   // devtool: 'source-map',
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: true, //资源找不到跳转index.html
     // open: true,
     // 让前后端http请求都转到node的3000端口，而不是前端的8080端口
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:' + port + '/', // 后端接口地址
         changeOrigin: true, // 是否允许跨越
-        ws: false,
+        ws: true,
         pathRewrite: {
           '^/api': '/api' // 重写,
         }

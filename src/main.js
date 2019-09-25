@@ -68,7 +68,6 @@ axios.interceptors.request.use(config => {
         // }
 
     }
-    console.log('aaaa',config)
     return config
 }, err => {
     // 对请求错误做些什么
