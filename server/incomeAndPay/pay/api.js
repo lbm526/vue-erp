@@ -23,6 +23,37 @@ module.exports = router => {
       })
     })
   })
+
+  // 查询今年收入列表
+  router.get('/api/incomeAndPay/payList_year', (req, res) => {
+    // 删除空指针的字段
+    // 进行多条件查询
+    const year = new Date().getFullYear().toString();
+    // 第二个对象参数过滤不需要字段，1为显示
+    db.PayModal.find({ year, companyId: req.query.companyId }, {
+      "money": 1,
+      "year": 1,
+      "month": 1,
+      "companyId": 1,
+    }).sort({ 'month': 1 }).then((list) => {
+      let result = JSON.parse(JSON.stringify(list))
+      // 将相同月的数据相加
+      for (let i = 0; i < result.length - 1; i++) {
+        for (let j = 0; j < result.length - 1 - i; j++) {
+          if (result[j].month == result[j + 1].month) {
+            result[j].number += result[j + 1].number;
+            result.splice(j + 1, 1);
+          }
+        }
+      }
+      res.json({
+        msg: '',
+        success: true,
+        result: result
+      })
+    })
+  })
+
   //   根据id查询支出信息
   router.get('/api/incomeAndPay/getIdByPayInfo', (req, res) => {
     db.PayModal.findOne({

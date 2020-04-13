@@ -213,7 +213,6 @@ module.exports = router => {
   //   文件下载
   router.get('/api/produce/downloadFile', (req, res) => {
     const data = req.query
-    console.log('a',req)
     db.FileModel.findOne({
       id: JSON.parse(data.id)
     }, (errT, file) => {
@@ -223,10 +222,8 @@ module.exports = router => {
           success:false
         })
       }
-      console.log('aaa')
       if (file) {
         // 文件下载
-        console.log('bbb')
         let paths = file.path
         let name = file.name
         res.download(paths, name)

@@ -377,6 +377,12 @@
         </template>
       </div>
     </div>
+    <div
+      style="text-align: center; position: absolute;bottom:0;width: 100%;font-size: 12px;"
+      target="_blank"
+    >
+      <a href="http://www.beian.miit.gov.cn">粤ICP备19083018号</a>
+    </div>
   </div>
 </template>
 <script>
