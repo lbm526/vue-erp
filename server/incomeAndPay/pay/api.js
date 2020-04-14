@@ -34,7 +34,7 @@ module.exports = router => {
       "money": 1,
       "year": 1,
       "month": 1,
-      "companyId": 1,
+      "_id": 0,
     }).sort({ 'month': 1 }).then((list) => {
       let result = JSON.parse(JSON.stringify(list))
       // 将相同月的数据相加
@@ -46,10 +46,24 @@ module.exports = router => {
           }
         }
       }
+      const arr = [];
+      // 将没有得年份加上，money为0
+      for (let q = 0; q < result.length; q++) {
+        for (let i = 1; i <= 12; i++) {
+          if (result[q] && result[q]["month"] == i) {
+            result[q]["month"] = Number(result[q]["month"])
+            arr.push(result[q]);
+            console.log(result[q])
+            result.splice(q, 1);
+            continue
+          }
+          arr.push({ money: 0, year: year, month: i })
+        }
+      }
       res.json({
         msg: '',
         success: true,
-        result: result
+        result: arr
       })
     })
   })

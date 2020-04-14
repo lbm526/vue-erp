@@ -110,7 +110,7 @@ export default {
                 },
                 series: [
                     {
-                        name: "访问来源",
+                        name: "产品情况",
                         type: "pie",
                         data: this.pieSeriesData
                     }
