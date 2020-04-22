@@ -349,7 +349,7 @@ export default {
         },
         color: this.$store.state.echartsColor,
         xAxis: {
-          name: "月",
+          name: "年",
           type: "category",
           data: this.five_year
         },
