@@ -22,7 +22,8 @@ module.exports = router => {
                             "year": {
                                 "$lte": "" + year_now + ""
                             }
-                        }]
+                        }],
+                        companyId: req.query.companyId
                     }
                 },
                 {
@@ -41,7 +42,8 @@ module.exports = router => {
                             "year": {
                                 "$lte": "" + year_now + ""
                             }
-                        }]
+                        }],
+                        companyId: req.query.companyId
                     }
                 },
                 {

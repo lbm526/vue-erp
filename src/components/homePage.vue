@@ -317,8 +317,13 @@ export default {
     },
     get_five_year_money() {
       const _this = this;
+      let user = this.$store.state.userInfo;
       this.axios
-        .get("/api/money/total_near_fiveYear")
+        .get("/api/money/total_near_fiveYear",{
+          params:{
+            companyId: user.companyId
+          }
+        })
         .then(res => {
           console.log("近5年利润趋势", res);
           const data = res.data.arr;
